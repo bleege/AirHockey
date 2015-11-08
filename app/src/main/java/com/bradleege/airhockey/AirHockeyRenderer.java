@@ -1,6 +1,10 @@
 package com.bradleege.airhockey;
 
 import android.opengl.GLSurfaceView;
+
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.FloatBuffer;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 import static android.opengl.GLES20.glClearColor;
@@ -11,6 +15,9 @@ import static android.opengl.GLES20.GL_COLOR_BUFFER_BIT;
 public class AirHockeyRenderer implements GLSurfaceView.Renderer {
 
     private static final int POSITION_COMPONENT_COUNT = 2;
+
+    private static final int BYTES_PER_FLOAT = 4;
+    private final FloatBuffer vertextData;
 
     public AirHockeyRenderer() {
 /*
@@ -38,6 +45,13 @@ public class AirHockeyRenderer implements GLSurfaceView.Renderer {
                                 4.5f, 2f,
                                 4.5f, 12f
         };
+
+        // Creating Space In Native Memory (Not Dalvik VM Memory) for OpenGL work
+        // Note the memory will be automatically freed up when the process is destroyed
+        vertextData = ByteBuffer.allocateDirect(tableVerticesWithTriangles.length * BYTES_PER_FLOAT)
+                                .order(ByteOrder.nativeOrder())
+                                .asFloatBuffer();
+        vertextData.put(tableVerticesWithTriangles);
     }
 
     /**
