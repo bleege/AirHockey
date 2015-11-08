@@ -9,6 +9,28 @@ import static android.opengl.GLES20.glClear;
 import static android.opengl.GLES20.GL_COLOR_BUFFER_BIT;
 
 public class AirHockeyRenderer implements GLSurfaceView.Renderer {
+
+    private static final int POSITION_COMPONENT_COUNT = 2;
+
+    public AirHockeyRenderer() {
+        // Original Table Rectangle
+        float[] tableVertices = { 0f, 0f,
+                                  0f, 14f,
+                                  9f, 14f,
+                                  9f, 0f };
+
+        // Table Rectangle Via Triangles
+        float[] tableVerticesWithTriangles = {
+                                // First Triangle
+                                0f, 0f,
+                                9f, 14f,
+                                0f, 14f,
+                                // Second Triangle
+                                0f, 0f,
+                                0f, 14f,
+                                9f, 14f };
+    }
+
     /**
      * Called to draw the current frame.
      * <p/>
