@@ -13,11 +13,13 @@ public class AirHockeyRenderer implements GLSurfaceView.Renderer {
     private static final int POSITION_COMPONENT_COUNT = 2;
 
     public AirHockeyRenderer() {
+/*
         // Original Table Rectangle
         float[] tableVertices = { 0f, 0f,
                                   0f, 14f,
                                   9f, 14f,
                                   9f, 0f };
+*/
 
         // Table Rectangle Via Triangles
         float[] tableVerticesWithTriangles = {
@@ -28,7 +30,14 @@ public class AirHockeyRenderer implements GLSurfaceView.Renderer {
                                 // Second Triangle
                                 0f, 0f,
                                 0f, 14f,
-                                9f, 14f };
+                                9f, 14f,
+                                // Center Line
+                                0f, 7f,
+                                9f, 7f,
+                                // Mallets
+                                4.5f, 2f,
+                                4.5f, 12f
+        };
     }
 
     /**
