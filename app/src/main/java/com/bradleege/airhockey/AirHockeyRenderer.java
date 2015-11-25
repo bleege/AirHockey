@@ -1,7 +1,8 @@
 package com.bradleege.airhockey;
 
+import android.content.Context;
 import android.opengl.GLSurfaceView;
-
+import com.bradleege.airhockey.util.TextResourceReader;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
@@ -14,12 +15,15 @@ import static android.opengl.GLES20.GL_COLOR_BUFFER_BIT;
 
 public class AirHockeyRenderer implements GLSurfaceView.Renderer {
 
+    private final Context context;
+
     private static final int POSITION_COMPONENT_COUNT = 2;
 
     private static final int BYTES_PER_FLOAT = 4;
     private final FloatBuffer vertextData;
 
-    public AirHockeyRenderer() {
+    public AirHockeyRenderer(Context context) {
+        this.context = context;
 /*
         // Original Table Rectangle
         float[] tableVertices = { 0f, 0f,
@@ -107,6 +111,10 @@ public class AirHockeyRenderer implements GLSurfaceView.Renderer {
         // Clears Screen
         // Specifically, clears screen to display Red when done
         glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
+
+        // Load In OpenGL Shaders
+        String vertexShaderSource = TextResourceReader.readTextFileFromResource(context, R.raw.simple_vertex_shader);
+        String fragmentShaderSource = TextResourceReader.readTextFileFromResource(context, R.raw.simple_fragment_shader);
     }
 
     /**
