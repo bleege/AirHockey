@@ -2,6 +2,7 @@ package com.bradleege.airhockey;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView;
+import com.bradleege.airhockey.util.LoggerConfig;
 import com.bradleege.airhockey.util.ShaderHelper;
 import com.bradleege.airhockey.util.TextResourceReader;
 import java.nio.ByteBuffer;
@@ -10,6 +11,7 @@ import java.nio.FloatBuffer;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 import static android.opengl.GLES20.glClearColor;
+import static android.opengl.GLES20.glUseProgram;
 import static android.opengl.GLES20.glViewport;
 import static android.opengl.GLES20.glClear;
 import static android.opengl.GLES20.GL_COLOR_BUFFER_BIT;
@@ -126,6 +128,11 @@ public class AirHockeyRenderer implements GLSurfaceView.Renderer {
 
         // Get OpenGL program
         program = ShaderHelper.linkProgram(vertexShader, fragmentShader);
+
+        // Validate OpenGL Program
+        if (LoggerConfig.ON) {
+            ShaderHelper.validateProgram(program);
+        }
     }
 
     /**
