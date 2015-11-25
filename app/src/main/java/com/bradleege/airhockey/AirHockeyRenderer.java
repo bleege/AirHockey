@@ -133,6 +133,9 @@ public class AirHockeyRenderer implements GLSurfaceView.Renderer {
         if (LoggerConfig.ON) {
             ShaderHelper.validateProgram(program);
         }
+
+        // Set OpenGL program to be used for any drawing
+        glUseProgram(program);
     }
 
     /**
