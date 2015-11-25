@@ -7,6 +7,8 @@ import static android.opengl.GLES20.GL_VERTEX_SHADER;
 import static android.opengl.GLES20.GL_FRAGMENT_SHADER;
 import static android.opengl.GLES20.glCompileShader;
 import static android.opengl.GLES20.glCreateShader;
+import static android.opengl.GLES20.glDeleteShader;
+import static android.opengl.GLES20.glGetShaderInfoLog;
 import static android.opengl.GLES20.glGetShaderiv;
 import static android.opengl.GLES20.glShaderSource;
 
@@ -43,11 +45,27 @@ public class ShaderHelper {
         // Retrieve results of Shader Compilation from Shader Object.
         // Place result in int array (compileStatus) at index specified (0 in this case)
         final int[] compileStatus = new int[1];
-        glGetShaderiv(shaderObjectId, GL_COMPILE_STATUS, compileStatus, 0;
+        glGetShaderiv(shaderObjectId, GL_COMPILE_STATUS, compileStatus, 0);
 
 
-        // TODO - Return compiled Shader
-        return 0;
+        if (LoggerConfig.ON) {
+            // Display results of shader compilation
+            Log.v(TAG, "Results of compiling shader source:\n" + shaderSourceCode + "\n" + glGetShaderInfoLog(shaderObjectId));
+        }
+
+        // Check for compilation failure
+        if (compileStatus[0] == 0) {
+            // Compilation failed, clean up shader memory
+            glDeleteShader(shaderObjectId);
+
+            if (LoggerConfig.ON) {
+                Log.w(TAG, "Compilation of shader failed.");
+            }
+            return 0;
+        }
+
+        // Compilation didn't fail, so return shader object id
+        return shaderObjectId;
     }
 
 }
