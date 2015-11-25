@@ -2,7 +2,6 @@ package com.bradleege.airhockey;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView;
-
 import com.bradleege.airhockey.util.ShaderHelper;
 import com.bradleege.airhockey.util.TextResourceReader;
 import java.nio.ByteBuffer;
@@ -18,6 +17,9 @@ import static android.opengl.GLES20.GL_COLOR_BUFFER_BIT;
 public class AirHockeyRenderer implements GLSurfaceView.Renderer {
 
     private final Context context;
+
+    // OpenGL Program
+    private int program;
 
     private static final int POSITION_COMPONENT_COUNT = 2;
 
@@ -121,6 +123,9 @@ public class AirHockeyRenderer implements GLSurfaceView.Renderer {
         // Compile the shaders
         int vertexShader = ShaderHelper.compileVertexShader(vertexShaderSource);
         int fragmentShader = ShaderHelper.compileFragmentShader(fragmentShaderSource);
+
+        // Get OpenGL program
+        program = ShaderHelper.linkProgram(vertexShader, fragmentShader);
     }
 
     /**
