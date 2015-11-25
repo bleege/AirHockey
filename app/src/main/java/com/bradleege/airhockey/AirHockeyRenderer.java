@@ -2,6 +2,8 @@ package com.bradleege.airhockey;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView;
+
+import com.bradleege.airhockey.util.ShaderHelper;
 import com.bradleege.airhockey.util.TextResourceReader;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -115,6 +117,10 @@ public class AirHockeyRenderer implements GLSurfaceView.Renderer {
         // Load In OpenGL Shaders
         String vertexShaderSource = TextResourceReader.readTextFileFromResource(context, R.raw.simple_vertex_shader);
         String fragmentShaderSource = TextResourceReader.readTextFileFromResource(context, R.raw.simple_fragment_shader);
+
+        // Compile the shaders
+        int vertexShader = ShaderHelper.compileVertexShader(vertexShaderSource);
+        int fragmentShader = ShaderHelper.compileFragmentShader(fragmentShaderSource);
     }
 
     /**
