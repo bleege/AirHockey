@@ -11,6 +11,8 @@ import java.nio.FloatBuffer;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 import static android.opengl.GLES20.glClearColor;
+import static android.opengl.GLES20.glGetAttribLocation;
+import static android.opengl.GLES20.glGetUniformLocation;
 import static android.opengl.GLES20.glUseProgram;
 import static android.opengl.GLES20.glViewport;
 import static android.opengl.GLES20.glClear;
@@ -22,6 +24,14 @@ public class AirHockeyRenderer implements GLSurfaceView.Renderer {
 
     // OpenGL Program
     private int program;
+
+    // Uniform Location Data
+    private static final String U_COLOR = "u_Color";
+    private int uColorLocation;
+
+    // Attribute Location Data
+    private static final String A_POSITION = "a_Position";
+    private int aPositionLocation;
 
     private static final int POSITION_COMPONENT_COUNT = 2;
 
@@ -136,6 +146,12 @@ public class AirHockeyRenderer implements GLSurfaceView.Renderer {
 
         // Set OpenGL program to be used for any drawing
         glUseProgram(program);
+
+        // Get Uniform Location
+        uColorLocation = glGetUniformLocation(program, U_COLOR);
+
+        // Get Attribute Location Once Shaders have been bound
+        aPositionLocation = glGetAttribLocation(program, A_POSITION);
     }
 
     /**
