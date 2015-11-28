@@ -162,8 +162,8 @@ public class AirHockeyRenderer implements GLSurfaceView.Renderer {
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
         // Clears Screen
-        // Specifically, clears screen to display Red when done
-        glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
+        // Specifically, clears screen to display Black when done
+        glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
         // Load In OpenGL Shaders
         String vertexShaderSource = TextResourceReader.readTextFileFromResource(context, R.raw.simple_vertex_shader);
