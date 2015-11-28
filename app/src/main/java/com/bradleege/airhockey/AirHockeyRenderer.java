@@ -12,6 +12,7 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 import static android.opengl.GLES20.GL_FLOAT;
 import static android.opengl.GLES20.glClearColor;
+import static android.opengl.GLES20.glEnableVertexAttribArray;
 import static android.opengl.GLES20.glGetAttribLocation;
 import static android.opengl.GLES20.glGetUniformLocation;
 import static android.opengl.GLES20.glUseProgram;
@@ -165,6 +166,9 @@ public class AirHockeyRenderer implements GLSurfaceView.Renderer {
         // Tell OpenGL that it can find data for a_Position in vertexData
         // glVertexAttribPointer(int index, int size, int type, boolean normalized, int stride, Buffer ptr)
         glVertexAttribPointer(aPositionLocation, POSITION_COMPONENT_COUNT, GL_FLOAT, false, 0, vertexData);
+
+        // Enable Vertex Data Array so OpenGL can find all data
+        glEnableVertexAttribArray(aPositionLocation);
     }
 
     /**
