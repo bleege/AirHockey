@@ -66,7 +66,7 @@ public class AirHockeyRenderer implements GLSurfaceView.Renderer {
                                 0f, 14f,
                                 // Second Triangle
                                 0f, 0f,
-                                0f, 14f,
+                                9f, 0f,
                                 9f, 14f,
                                 // Center Line
                                 0f, 7f,
