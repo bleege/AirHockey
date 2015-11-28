@@ -10,10 +10,12 @@ import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
+import static android.opengl.GLES20.GL_FLOAT;
 import static android.opengl.GLES20.glClearColor;
 import static android.opengl.GLES20.glGetAttribLocation;
 import static android.opengl.GLES20.glGetUniformLocation;
 import static android.opengl.GLES20.glUseProgram;
+import static android.opengl.GLES20.glVertexAttribPointer;
 import static android.opengl.GLES20.glViewport;
 import static android.opengl.GLES20.glClear;
 import static android.opengl.GLES20.GL_COLOR_BUFFER_BIT;
@@ -33,10 +35,12 @@ public class AirHockeyRenderer implements GLSurfaceView.Renderer {
     private static final String A_POSITION = "a_Position";
     private int aPositionLocation;
 
+    // How Many components are associated with each vertex for this attribute
+    // In this case 2: x coordinate AND y coordinate
     private static final int POSITION_COMPONENT_COUNT = 2;
 
     private static final int BYTES_PER_FLOAT = 4;
-    private final FloatBuffer vertextData;
+    private final FloatBuffer vertexData;
 
     public AirHockeyRenderer(Context context) {
         this.context = context;
@@ -68,10 +72,10 @@ public class AirHockeyRenderer implements GLSurfaceView.Renderer {
 
         // Creating Space In Native Memory (Not Dalvik VM Memory) for OpenGL work
         // Note the memory will be automatically freed up when the process is destroyed
-        vertextData = ByteBuffer.allocateDirect(tableVerticesWithTriangles.length * BYTES_PER_FLOAT)
+        vertexData = ByteBuffer.allocateDirect(tableVerticesWithTriangles.length * BYTES_PER_FLOAT)
                                 .order(ByteOrder.nativeOrder())
                                 .asFloatBuffer();
-        vertextData.put(tableVerticesWithTriangles);
+        vertexData.put(tableVerticesWithTriangles);
     }
 
     /**
@@ -152,6 +156,15 @@ public class AirHockeyRenderer implements GLSurfaceView.Renderer {
 
         // Get Attribute Location Once Shaders have been bound
         aPositionLocation = glGetAttribLocation(program, A_POSITION);
+
+        // Tell OpenGL where to find data for our attribute a_Position
+        // ===========================================================
+        // Ensure OpenGL starts at beginning of data buffer
+        vertexData.position(0);
+
+        // Tell OpenGL that it can find data for a_Position in vertexData
+        // glVertexAttribPointer(int index, int size, int type, boolean normalized, int stride, Buffer ptr)
+        glVertexAttribPointer(aPositionLocation, POSITION_COMPONENT_COUNT, GL_FLOAT, false, 0, vertexData);
     }
 
     /**
