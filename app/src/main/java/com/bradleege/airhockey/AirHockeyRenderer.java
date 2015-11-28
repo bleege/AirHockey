@@ -11,10 +11,15 @@ import java.nio.FloatBuffer;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 import static android.opengl.GLES20.GL_FLOAT;
+import static android.opengl.GLES20.GL_LINES;
+import static android.opengl.GLES20.GL_POINTS;
+import static android.opengl.GLES20.GL_TRIANGLES;
 import static android.opengl.GLES20.glClearColor;
+import static android.opengl.GLES20.glDrawArrays;
 import static android.opengl.GLES20.glEnableVertexAttribArray;
 import static android.opengl.GLES20.glGetAttribLocation;
 import static android.opengl.GLES20.glGetUniformLocation;
+import static android.opengl.GLES20.glUniform4f;
 import static android.opengl.GLES20.glUseProgram;
 import static android.opengl.GLES20.glVertexAttribPointer;
 import static android.opengl.GLES20.glViewport;
@@ -101,6 +106,33 @@ public class AirHockeyRenderer implements GLSurfaceView.Renderer {
         // This will wipe out all colors on the screen and fill the screen with
         // the color previously defined by our call to glClearColor.
         glClear(GL_COLOR_BUFFER_BIT);
+
+
+        // Draw the Air Hockey Table
+        // =========================
+
+        // Set the color to white
+        glUniform4f(uColorLocation, 1.0f, 1.0f, 1.0f, 1.0f);
+        // Set drawing mode to Triangles, start reading vertices from beginning of array, read (and draw) 6 vertices
+        // This draws First Triangle and Second Triangle because glVertexAttribPointer() told OpenGL that each vertex consists of 2 components
+        glDrawArrays(GL_TRIANGLES, 0, 6);
+
+        // Draw the Dividing Line (aka Center Ice)
+        // =======================================
+        // Set the color to black
+        glUniform4f(uColorLocation, 1.0f, 0.0f, 0.0f, 1.0f);
+        // Draw lines, starting at 6th index of array, draw two vertices
+        glDrawArrays(GL_LINES, 6, 2);
+
+        // Draw The Mallets
+        // ================
+        // Draw first mallet as blue, from 8th index, and 1 vertex
+        glUniform4f(uColorLocation, 0.0f, 0.0f, 1.0f, 1.0f);
+        glDrawArrays(GL_POINTS, 8, 1);
+
+        // Draw second mallet as red, from 9th index, and 1 vertex
+        glUniform4f(uColorLocation, 1.0f, 0.0f, 0.0f, 1.0f);
+        glDrawArrays(GL_POINTS, 9, 1);
     }
 
     /**
